@@ -1124,6 +1124,9 @@
         const viewNewGameBtn = document.getElementById('viewNewGameBtn');
         const viewBackToHomeBtn = document.getElementById('viewBackToHomeBtn');
         
+        // 新增：排行榜分數顯示元素
+        const leaderboardScoreElement = document.getElementById('leaderboardScore');
+        
         // 顯示主頁
         function showHomePage() {
             homePage.style.display = 'flex';
@@ -1151,6 +1154,11 @@
             // 更新排行榜顯示
             updateLeaderboardDisplay();
             
+            // 更新排行榜分數顯示 - 確保顯示當前分數
+            if (leaderboardScoreElement) {
+                leaderboardScoreElement.textContent = gameState.score;
+            }
+            
             // 根據來源顯示不同的內容
             if (fromHomePage) {
                 // 從主頁進入：顯示簡潔的排行榜和按鈕
@@ -1166,6 +1174,10 @@
                     leaderboardFormContainer.style.display = 'none';
                     leaderboardViewOnly.style.display = 'block';
                 } else {
+                    // 確保分數顯示正確
+                    if (leaderboardScoreElement) {
+                        leaderboardScoreElement.textContent = gameState.score;
+                    }
                     leaderboardFormContainer.style.display = 'block';
                     leaderboardViewOnly.style.display = 'none';
                 }
@@ -1818,19 +1830,19 @@
         
         // 關卡完成後的排行榜按鈕（結束遊戲）
         leaderboardBtn.addEventListener('click', () => {
-            console.log("關卡完成後點擊排行榜按鈕");
+            console.log("關卡完成後點擊排行榜按鈕，當前分數:", gameState.score);
             showLeaderboardPage(false);
         });
         
         // 遊戲完成後的排行榜按鈕
         finalLeaderboardBtn.addEventListener('click', () => {
-            console.log("遊戲完成後點擊排行榜按鈕");
+            console.log("遊戲完成後點擊排行榜按鈕，當前分數:", gameState.score);
             showLeaderboardPage(false);
         });
         
         // 超時後的排行榜按鈕
         timeoutLeaderboardBtn.addEventListener('click', () => {
-            console.log("超時後點擊排行榜按鈕");
+            console.log("超時後點擊排行榜按鈕，當前分數:", gameState.score);
             showLeaderboardPage(false);
         });
         
