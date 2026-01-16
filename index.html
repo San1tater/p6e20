@@ -1017,6 +1017,9 @@
                 
                 <!-- 成績保存後顯示的區域 -->
                 <div id="leaderboardViewOnly" style="display: none;">
+                    <div class="player-rank-info" id="playerRankInfo">
+                        <!-- 玩家排名信息將在這裡顯示 -->
+                    </div>
                     <div class="leaderboard-buttons">
                         <button id="viewNewGameBtn2">重新開始遊戲</button>
                         <button id="viewBackToHomeBtn2" class="back-home-btn">返回主頁</button>
@@ -1126,6 +1129,14 @@
         
         // 新增：排行榜分數顯示元素
         const leaderboardScoreElement = document.getElementById('leaderboardScore');
+        const playerRankInfo = document.getElementById('playerRankInfo');
+        const playerNameInput = document.getElementById('playerName');
+        const leaderboardForm = document.getElementById('leaderboardForm');
+        const saveScoreBtn = document.getElementById('saveScoreBtn');
+        const newGameFromLeaderboardBtn = document.getElementById('newGameFromLeaderboardBtn');
+        const backToHomeFromLeaderboardBtn = document.getElementById('backToHomeFromLeaderboardBtn');
+        const viewNewGameBtn2 = document.getElementById('viewNewGameBtn2');
+        const viewBackToHomeBtn2 = document.getElementById('viewBackToHomeBtn2');
         
         // 顯示主頁
         function showHomePage() {
@@ -1789,6 +1800,60 @@
             });
         }
         
+        // 保存成績到排行榜
+        function saveScoreToLeaderboard(name, score) {
+            // 創建新的玩家記錄
+            const newPlayer = {
+                name: name.trim() || '匿名玩家',
+                score: score,
+                date: new Date().toISOString().split('T')[0] // 保存日期
+            };
+            
+            // 添加到排行榜
+            leaderboard.push(newPlayer);
+            
+            // 按分數排序（從高到低）
+            leaderboard.sort((a, b) => b.score - a.score);
+            
+            // 如果排行榜太長，只保留前10名
+            if (leaderboard.length > 10) {
+                leaderboard = leaderboard.slice(0, 10);
+            }
+            
+            // 保存到本地存儲
+            saveLeaderboard();
+            
+            // 更新顯示
+            updateLeaderboardDisplay();
+            
+            // 查找玩家排名
+            const playerRank = leaderboard.findIndex(player => 
+                player.name === newPlayer.name && player.score === newPlayer.score) + 1;
+            
+            // 顯示玩家排名信息
+            if (playerRankInfo) {
+                let rankMessage = '';
+                if (playerRank <= 3) {
+                    const medals = ['🥇', '🥈', '🥉'];
+                    rankMessage = `恭喜！你獲得了第${playerRank}名${medals[playerRank-1]}！`;
+                } else {
+                    rankMessage = `你的成績已記錄，排名第${playerRank}名！`;
+                }
+                playerRankInfo.innerHTML = `
+                    <div style="margin-bottom: 10px;">${rankMessage}</div>
+                    <div>玩家: ${newPlayer.name}</div>
+                    <div>分數: ${newPlayer.score} 🏮</div>
+                `;
+            }
+            
+            // 標記已保存成績
+            gameState.hasSavedScore = true;
+            
+            // 顯示保存成功的視圖
+            leaderboardFormContainer.style.display = 'none';
+            leaderboardViewOnly.style.display = 'block';
+        }
+        
         // 工具函數：隨機打亂數組
         function shuffleArray(array) {
             const newArray = [...array];
@@ -1875,6 +1940,46 @@
         
         // 排行榜頁面的返回主頁按鈕
         viewBackToHomeBtn.addEventListener('click', () => {
+            showHomePage();
+        });
+        
+        // 保存成績按鈕
+        leaderboardForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const playerName = playerNameInput.value.trim();
+            if (!playerName) {
+                alert('請輸入你的暱稱！');
+                playerNameInput.focus();
+                return;
+            }
+            
+            // 保存成績
+            saveScoreToLeaderboard(playerName, gameState.score);
+            
+            // 顯示成功提示
+            console.log("成績已保存:", playerName, gameState.score);
+        });
+        
+        // 排行榜頁面的重新開始遊戲按鈕
+        newGameFromLeaderboardBtn.addEventListener('click', () => {
+            leaderboardPage.style.display = 'none';
+            initGame();
+        });
+        
+        // 排行榜頁面的返回主頁按鈕
+        backToHomeFromLeaderboardBtn.addEventListener('click', () => {
+            showHomePage();
+        });
+        
+        // 保存後視圖的重新開始遊戲按鈕
+        viewNewGameBtn2.addEventListener('click', () => {
+            leaderboardPage.style.display = 'none';
+            initGame();
+        });
+        
+        // 保存後視圖的返回主頁按鈕
+        viewBackToHomeBtn2.addEventListener('click', () => {
             showHomePage();
         });
         
