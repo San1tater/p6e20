@@ -50,17 +50,17 @@
         
         .game-title h1 {
             font-size: 4.5rem;
-            color: #ff3333;
+            color: #ffcc00; /* 改為黃色 */
             margin-bottom: 10px;
             letter-spacing: 3px;
             text-shadow: 
-                -2px -2px 0 #ffcc00,
-                2px -2px 0 #ffcc00,
-                -2px 2px 0 #ffcc00,
-                2px 2px 0 #ffcc00,
-                0 0 10px rgba(255, 204, 0, 0.5);
-            -webkit-text-stroke: 4px #ffcc00;
-            text-stroke: 4px #ffcc00;
+                -2px -2px 0 #ff3333,
+                2px -2px 0 #ff3333,
+                -2px 2px 0 #ff3333,
+                2px 2px 0 #ff3333,
+                0 0 10px rgba(255, 51, 51, 0.5);
+            -webkit-text-stroke: 4px #ff3333;
+            text-stroke: 4px #ff3333;
             font-weight: bold;
             animation: titleGlow 3s infinite alternate;
         }
@@ -68,19 +68,19 @@
         @keyframes titleGlow {
             0% {
                 text-shadow: 
-                    -2px -2px 0 #ffcc00,
-                    2px -2px 0 #ffcc00,
-                    -2px 2px 0 #ffcc00,
-                    2px 2px 0 #ffcc00,
-                    0 0 10px rgba(255, 204, 0, 0.5);
+                    -2px -2px 0 #ff3333,
+                    2px -2px 0 #ff3333,
+                    -2px 2px 0 #ff3333,
+                    2px 2px 0 #ff3333,
+                    0 0 10px rgba(255, 51, 51, 0.5);
             }
             100% {
                 text-shadow: 
-                    -3px -3px 0 #ffcc00,
-                    3px -3px 0 #ffcc00,
-                    -3px 3px 0 #ffcc00,
-                    3px 3px 0 #ffcc00,
-                    0 0 20px rgba(255, 204, 0, 0.8);
+                    -3px -3px 0 #ff3333,
+                    3px -3px 0 #ff3333,
+                    -3px 3px 0 #ff3333,
+                    3px 3px 0 #ff3333,
+                    0 0 20px rgba(255, 51, 51, 0.8);
             }
         }
         
@@ -237,22 +237,13 @@
             animation: pulse 1s infinite;
         }
         
+        /* 移除玩法說明區域 */
         .instructions {
-            padding: 12px 25px;
-            background-color: #fff9e6;
-            text-align: center;
-            font-size: 1.2rem;
-            color: #555;
-            border-bottom: 2px dashed #ff6666;
-        }
-        
-        .instructions span {
-            color: #ff6666;
-            font-weight: bold;
+            display: none;
         }
         
         .game-board {
-            padding: 20px;
+            padding: 15px 20px 10px 20px; /* 上邊距減少，整體上移 */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -264,7 +255,7 @@
             background-color: #fff0f0;
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* 減少間距 */
             width: 100%;
             min-height: 110px;
             border: 2px solid #ff9999;
@@ -292,7 +283,7 @@
             gap: 12px;
             width: 100%;
             flex: 1;
-            margin-bottom: 20px;
+            margin-bottom: 15px; /* 減少間距 */
             overflow-y: auto;
             padding: 10px;
         }
@@ -339,7 +330,7 @@
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-top: 10px;
+            margin-top: 5px; /* 減少間距 */
             width: 100%;
         }
         
@@ -400,7 +391,7 @@
             width: 100%;
             background-color: #f5f5f5;
             border-radius: 10px;
-            margin-top: 20px;
+            margin-top: 15px; /* 減少間距 */
             overflow: hidden;
             box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
         }
@@ -414,10 +405,10 @@
         }
         
         .target-container {
-            padding: 15px 30px;
+            padding: 12px 30px; /* 減少上邊距 */
             background-color: #fff0f0;
             border-top: 2px dashed #ff6666;
-            min-height: 120px;
+            min-height: 110px; /* 減少高度 */
         }
         
         .target-container h3 {
@@ -917,9 +908,7 @@
                 </div>
             </div>
             
-            <div class="instructions">
-                玩法: 點擊漢字組成與馬年春節相關的詞語，每關限時30秒！
-            </div>
+            <!-- 移除玩法說明區域 -->
             
             <div class="game-board">
                 <div class="selected-container">
